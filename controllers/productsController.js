@@ -1,5 +1,5 @@
 const productsService = require('../services/productsServices');
-const productsValidations = require('../middlewares/productsValidations');
+// const productsValidations = require('../middlewares/productsValidations');
 
 const getAll = async (_req, res, _next) => {
   const products = await productsService.getAll();
@@ -15,15 +15,14 @@ const getById = async (req, res, _next) => {
 };
 
 const createProducts = async (req, res) => {
-  const { error } = productsValidations.validate(req.body);
+  const { name } = req.body;  
   
-  if (error) {
-    const [code, message] = error.message.split('|');
-    return res.status(code).json(message);    
-  }
-  
-  const { code, data } = await productsService.createProducts(req.body);
-  return res.status(code).json(data);
+  const names = await productsService.getAll();
+  const validateName = names.some((e) => e.name === name);
+  if (validateName) return res.status(409).json({ message: 'Product already exists' });
+
+  const { code, result } = await productsService.createProducts(req.body);
+return res.status(code).json(result);
 };
 
 module.exports = {
@@ -32,7 +31,10 @@ module.exports = {
   createProducts,
 };
 
-// const { name } = req.body;
-//   if (productsService.getAll()
-//   .some((n) => n.name === name)) return res.status(409).json({ message: 'Product already exists' });
-//   return res.status(201).json(productsService.createProducts(req.body));
+  // const { name } = req.body;
+  // const { error } = productsValidations.validate(req.body);
+  
+  // if (error) {
+  //   const [code, message] = error.message.split('|');
+  //   return res.status(code).json(message);    
+  // } 
