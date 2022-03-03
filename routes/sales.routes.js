@@ -1,5 +1,10 @@
 const express = require('express');
+const rescue = require('express-rescue');
+const salesController = require('../controllers/salesController');
 
-const salesRouter = express.Router();
+const router = express.Router();
 
-module.exports = salesRouter;
+router.get('/', rescue(salesController.getAll));
+router.get('/:id', rescue(salesController.getById));
+
+module.exports = router;

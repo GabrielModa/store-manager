@@ -5,6 +5,7 @@ require('express-async-errors');
 const { errorHandler } = require('./middlewares/index');
 
 const productRouter = require('./routes/products.routes');
+const salesRouter = require('./routes/sales.routes');
 
 const app = express();
 app.use(express.json());
@@ -16,8 +17,7 @@ app.get('/', (_request, response) => {
 
 app.use('/products', productRouter);
 
-// app.use('./sales', salesRouter);
-// app.use('./sales/:id', salesRouter);
+app.use('/sales', salesRouter);
 
 app.use(errorHandler);
 
