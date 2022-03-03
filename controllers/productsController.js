@@ -1,5 +1,5 @@
 const productsService = require('../services/productsServices');
-// const productsValidations = require('../middlewares/productsValidations');
+const productsValidations = require('../middlewares/productsValidations');
 
 const getAll = async (_req, res, _next) => {
   const products = await productsService.getAll();
@@ -16,6 +16,14 @@ const getById = async (req, res, _next) => {
 
 const createProducts = async (req, res) => {
   const { name } = req.body;  
+
+  const { error } = productsValidations.validate(req.body);
+
+  if (error) {
+    const [code, message] = error.message.split('|');
+    console.log(code, message);
+    return res.status(code).json({ message });
+  }
   
   const names = await productsService.getAll();
   const validateName = names.some((e) => e.name === name);
@@ -30,11 +38,3 @@ module.exports = {
   getById,
   createProducts,
 };
-
-  // const { name } = req.body;
-  // const { error } = productsValidations.validate(req.body);
-  
-  // if (error) {
-  //   const [code, message] = error.message.split('|');
-  //   return res.status(code).json(message);    
-  // } 
