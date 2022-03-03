@@ -17,13 +17,22 @@ const getAll = async () => {
    return camelCaseResult;
   };
 
-  // const getById = async (id) => {
-  //   const SQL = 'SELECT * FROM StoreManager.sales_products WHERE id = ?';
-  //   const [result] = await connection.execute(SQL, [id]);    
-  //   return result[0];
-  // };
+  const getById = async (id) => {
+    const SQL = `SELECT date, product_id, quantity 
+    FROM StoreManager.sales_products as sp
+    JOIN StoreManager.sales as p
+    ON sp.sale_id = p.id WHERE p.id = ?`;
+    const [result] = await connection.execute(SQL, [id]);   
+    const camelCaseResult = result.map((colum) => ({
+    date: colum.date,
+    productId: colum.product_id,
+    quantity: colum.quantity,
+    }));
+    
+    return camelCaseResult;
+  };
 
 module.exports = {
   getAll,
-  // getById,
+  getById,
 };
