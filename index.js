@@ -1,11 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 
-const { errorHandler } = require('./middlewares/index');
 require('express-async-errors');
+const { errorHandler } = require('./middlewares/index');
 
-const { productRouter, productByIdRouter,
-   salesRouter, salesByIdRouter } = require('./routes/index.routes');
+const productRouter = require('./routes/products.routes');
 
 const app = express();
 app.use(express.json());
@@ -16,10 +15,9 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/products', productRouter);
-app.use('/products/:id', productByIdRouter);
 
-app.use('./sales', salesRouter);
-app.use('./sales/:id', salesByIdRouter);
+// app.use('./sales', salesRouter);
+// app.use('./sales/:id', salesRouter);
 
 app.use(errorHandler);
 
