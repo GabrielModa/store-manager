@@ -1,5 +1,6 @@
 const productsService = require('../services/productsServices');
 const productsValidations = require('../middlewares/productsValidations');
+const productsModels = require('../models/productsModels');
 
 const getAll = async (_req, res, _next) => {
   const products = await productsService.getAll();
@@ -18,10 +19,8 @@ const createProducts = async (req, res) => {
   const { name } = req.body;  
 
   const { error } = productsValidations.validate(req.body);
-
   if (error) {
     const [code, message] = error.message.split('|');
-    console.log(code, message);
     return res.status(code).json({ message });
   }
   
@@ -33,8 +32,25 @@ const createProducts = async (req, res) => {
 return res.status(code).json(result);
 };
 
+const putById = async (req, res, _next) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
+
+  // const { error } = productsValidations.validate(req.body);
+  // if (error) {
+  //   const [code, message] = error.message.split('|');
+  //   return res.status(code).json({ message });
+  // }
+  const productById = await productsModels.putById(id, { name, quantity });
+  if (!productById) return res.status(404).json({ message: 'Product not found' });
+
+  // const result = await productsModels.putById(name, quantity, id);
+  return res.status(200).json(productById);
+};
+
 module.exports = {
   getAll,
   getById,
   createProducts,
+  putById,
 };

@@ -1,3 +1,4 @@
+const salesValidations = require('../middlewares/salesValidations');
 const salesServices = require('../services/salesServices');
 
 const getAll = async (_req, res, _next) => {
@@ -16,7 +17,16 @@ const getById = async (req, res, _next) => {
  return res.status(200).json(salesById);
 };
 
+const postSales = async (req, res, _next) => {
+ const { error } = salesValidations.validate(req.body);
+ if (error) {
+   const [code, message] = error.message.split('|');
+   return res.status(code).json({ message });
+ }
+};
+
 module.exports = {
   getAll,
   getById,
+  postSales,
 };
