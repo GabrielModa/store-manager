@@ -47,7 +47,6 @@ const putById = async (req, res, _next) => {
   // const result = await productsModels.putById(name, quantity, id);
   return res.status(200).json(productById);
 };
-
 module.exports = {
   getAll,
   getById,
