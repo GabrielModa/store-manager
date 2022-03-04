@@ -41,11 +41,10 @@ const putById = async (req, res, _next) => {
   //   const [code, message] = error.message.split('|');
   //   return res.status(code).json({ message });
   // }
-  const productById = await productsModels.putById(id, { name, quantity });
-  if (!productById) return res.status(404).json({ message: 'Product not found' });
+  const { code, result } = await productsService.putById(id, { name, quantity });
+  if (!result) return res.status(404).json({ message: 'Product not found' });
 
-  // const result = await productsModels.putById(name, quantity, id);
-  return res.status(200).json(productById);
+  return res.status(code).json(result);
 };
 module.exports = {
   getAll,

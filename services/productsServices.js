@@ -9,15 +9,15 @@ const createProducts = async ({ name, quantity }) => {
   return { code: 201, result }; 
   };
 
-  // const putById = async ({ name, quantity, id }) => {
-  //   const result = await productsModel.putById(name, quantity, id);
+  const putById = async (id, name, quantity) => {
+    const result = await productsModel.putById(id, name, quantity);
 
-  //   return result;
-  // };
+    return { code: 200, result }; 
+  };
 
 module.exports = {
   getAll,
   getById,
   createProducts,
-  // putById,
+  putById,
 };
