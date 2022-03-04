@@ -35,11 +35,12 @@ const putById = async (req, res, _next) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
 
-  // const { error } = productsValidations.validate(req.body);
-  // if (error) {
-  //   const [code, message] = error.message.split('|');
-  //   return res.status(code).json({ message });
-  // }
+  const { error } = productsValidations.validate(req.body);
+  if (error) {
+    const [code, message] = error.message.split('|');
+    return res.status(code).json({ message });
+  }
+  
   const { code, result } = await productsService.putById(id, { name, quantity });
   if (!result) return res.status(404).json({ message: 'Product not found' });
 
