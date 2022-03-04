@@ -46,9 +46,17 @@ const putById = async (req, res, _next) => {
 
   return res.status(code).json(result);
 };
+
+const deleteById = async (req, res, _next) => {
+  const { id } = req.params;
+  if (!id) return res.status(404).json({ message: 'Product not found' });
+  res.status(204);
+};
+
 module.exports = {
   getAll,
   getById,
   createProducts,
   putById,
+  deleteById,
 };

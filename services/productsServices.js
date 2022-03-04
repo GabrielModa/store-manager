@@ -15,9 +15,12 @@ const createProducts = async ({ name, quantity }) => {
     return { code: 200, result }; 
   };
 
+  const deleteById = async (id) => productsModel.deleteById(id);
+
 module.exports = {
   getAll,
   getById,
   createProducts,
   putById,
+  deleteById,
 };
