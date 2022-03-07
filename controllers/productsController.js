@@ -1,5 +1,5 @@
 const productsService = require('../services/productsServices');
-const productsValidations = require('../middlewares/productsValidations');
+const productsValidations = require('../schemas/products');
 
 const getAll = async (_req, res, _next) => {
   const products = await productsService.getAll();

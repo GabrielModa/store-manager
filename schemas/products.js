@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-module.exports = Joi.object({
+const products = Joi.object({
   name: Joi.string().min(5)
   .required()
     .messages({
@@ -14,3 +14,5 @@ module.exports = Joi.object({
       'number.positive': '422|"quantity" must be greater than or equal to 1',          
   }),
 });
+
+module.exports = products;

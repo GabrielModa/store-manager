@@ -1,5 +1,5 @@
-const salesValidations = require('../middlewares/salesValidations');
 const salesServices = require('../services/salesServices');
+const salesValidate = require('../schemas/sales');
 
 const getAll = async (_req, res, _next) => {
   const sales = await salesServices.getAll();
@@ -17,16 +17,14 @@ const getById = async (req, res, _next) => {
  return res.status(200).json(salesById);
 };
 
-const postSales = async (req, res, _next) => {
- const { error } = salesValidations.validate(req.body);
- if (error) {
-   const [code, message] = error.message.split('|');
-   return res.status(code).json({ message });
- }
-};
-
 const salesProducts = async (req, res, _next) => {
   const sales = req.body;
+
+  const { error } = salesValidate.validate(req.body);
+  if (error) {
+    const [code, message] = error.message.split('|');
+    return res.status(code).json({ message });
+  }
 
   const { code, result } = await salesServices.salesProducts(sales);
   res.status(code).json(result);
@@ -34,7 +32,13 @@ const salesProducts = async (req, res, _next) => {
 
 const put = async (req, res, _next) => {
   const { id } = req.params;
-  
+
+  const { error } = salesValidate.validate(req.body);
+  if (error) {
+    const [code, message] = error.message.split('|');
+    return res.status(code).json({ message });
+  }
+
   const { code, result } = await salesServices.put(id, req.body[0]);
   console.log(result);
   res.status(code).json(result);
@@ -43,7 +47,6 @@ const put = async (req, res, _next) => {
 module.exports = {
   getAll,
   getById,
-  postSales,
   salesProducts,
   put,
 };
