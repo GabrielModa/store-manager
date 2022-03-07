@@ -53,8 +53,26 @@ const getAll = async () => {
   return { id: insertId, itemsSold: arrayProducts };
 };
 
+const put = async (id, productId, quantity) => {
+    const SQL_PUT = `UPDATE StoreManager.sales_products 
+    SET product_id = ?, quantity = ? 
+    WHERE sale_id = ?`;
+    await connection.execute(SQL_PUT, [id, productId, quantity]);
+    
+    return {
+      saleId: id,
+      itemUpdated: [
+        {
+          productId,
+          quantity,
+        },
+      ],
+    };
+};
+
 module.exports = {
   getAll,
   getById,
   salesProducts,
+  put,
 };

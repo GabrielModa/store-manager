@@ -32,9 +32,18 @@ const salesProducts = async (req, res, _next) => {
   res.status(code).json(result);
 };
 
+const put = async (req, res, _next) => {
+  const { id } = req.params;
+  
+  const { code, result } = await salesServices.put(id, req.body[0]);
+  console.log(result);
+  res.status(code).json(result);
+};
+
 module.exports = {
   getAll,
   getById,
   postSales,
   salesProducts,
+  put,
 };
