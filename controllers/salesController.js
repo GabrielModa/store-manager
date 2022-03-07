@@ -25,8 +25,16 @@ const postSales = async (req, res, _next) => {
  }
 };
 
+const salesProducts = async (req, res, _next) => {
+  const sales = req.body;
+
+  const { code, result } = await salesServices.salesProducts(sales);
+  res.status(code).json(result);
+};
+
 module.exports = {
   getAll,
   getById,
   postSales,
+  salesProducts,
 };

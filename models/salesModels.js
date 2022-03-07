@@ -32,7 +32,29 @@ const getAll = async () => {
     return camelCaseResult;
   };
 
+ const salesProducts = async (sales) => {
+    const SQL_ID = 'INSERT StoreManager.sales () VALUES ()';    
+    const [resultId] = await connection.execute(SQL_ID);
+    const { insertId } = resultId;
+
+    const SQL_PRODUCTS = `INSERT StoreManager.sales_products
+    (sale_id, product_id, quantity)
+    VALUES (?, ?, ?)`;
+
+    sales.map(async (p) => {
+      await connection.execute(SQL_PRODUCTS, [insertId, p.productId, p.quantity]);
+    });
+
+    const arrayProducts = sales.map((p) => ({
+      productId: p.productId,
+      quantity: p.quantity,
+    }));
+
+  return { id: insertId, itemsSold: arrayProducts };
+};
+
 module.exports = {
   getAll,
   getById,
+  salesProducts,
 };
