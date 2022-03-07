@@ -57,7 +57,7 @@ const put = async (id, productId, quantity) => {
     const SQL_PUT = `UPDATE StoreManager.sales_products 
     SET product_id = ?, quantity = ? 
     WHERE sale_id = ?`;
-    await connection.execute(SQL_PUT, [id, productId, quantity]);
+    await connection.execute(SQL_PUT, [productId, quantity, id]);
     
     return {
       saleId: id,
