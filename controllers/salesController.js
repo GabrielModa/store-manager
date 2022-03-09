@@ -14,7 +14,7 @@ const getById = async (req, res, _next) => {
  return res.status(404).json({ message: 'Sale not found' });
  }
  
- return res.status(200).json(salesById);
+ return res.status(200).json(salesById);  
 };
 
 const salesProducts = async (req, res, _next) => {

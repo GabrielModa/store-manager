@@ -1,5 +1,7 @@
 const sinon = require('sinon');
 const { expect } =require('chai');
+require('dotenv').config();
+
 
 const productsServices = require('../../../services/productsServices');
 const productsModels = require('../../../models/productsModels');
@@ -7,7 +9,7 @@ const productsModels = require('../../../models/productsModels');
 describe('Buscar todos os produtos do BD', () => {
   describe('Quando não existir nenhum produto', () => {
     before(() => {
-     const execute = [[]];      
+     const execute = [];      
     sinon.stub(productsModels, 'getAll').resolves(execute);
     });
 
