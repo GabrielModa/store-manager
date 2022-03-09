@@ -13,7 +13,7 @@ describe('Buscar todos os produtos do BD', () => {
     before(() => {
       response.body = {};
       response.status = sinon.stub().returns(response);
-      response.json = sinon.stub().returns();
+      response.json = sinon.stub().returns([]);
 
     sinon.stub(salesServices, 'getAll').resolves([]);
     });
