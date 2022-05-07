@@ -5,7 +5,6 @@ const getById = async (id) => salesModel.getById(id);
 
 const salesProducts = async (sales) => {
 const result = await salesModel.salesProducts(sales);
-
 return { code: 201, result };
 };
 

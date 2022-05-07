@@ -27,6 +27,8 @@ const salesProducts = async (req, res, _next) => {
   }
 
   const { code, result } = await salesServices.salesProducts(sales);
+  console.log(result);
+
   res.status(code).json(result);
 };
 
@@ -40,7 +42,6 @@ const put = async (req, res, _next) => {
   }
 
   const { code, result } = await salesServices.put(id, req.body[0]);
-  console.log(result);
   res.status(code).json(result);
 };
 
